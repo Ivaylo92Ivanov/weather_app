@@ -1,3 +1,7 @@
-body {
-  background-color: blanchedalmond;
+html {
+  background-color: black;
+  background-image: url('./images/sky_background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
