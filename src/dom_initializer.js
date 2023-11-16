@@ -27,11 +27,15 @@ function initializeLocationForm() {
   searchBtn.className = 'search-btn';
   searchBtn.innerText = 'Search';
   
+  const errorField = document.createElement("p");
+  errorField.className = "error";
+  errorField.innerText = "Test error";
+
   inputDiv.appendChild(locationInput);
   inputDiv.appendChild(searchBtn);
-
+  
   visitorFormWrapper.appendChild(locationInputLabel);
   visitorFormWrapper.appendChild(inputDiv);
-
+  visitorFormWrapper.appendChild(errorField);
   return visitorFormWrapper;
 }
