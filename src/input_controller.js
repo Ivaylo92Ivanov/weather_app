@@ -1,15 +1,15 @@
 import getWeatherData from "./weather_data_getter";
 
-export default function setInputListener() {
+export default function addInputListener() {
   const searchBtn = document.querySelector('.search-btn');
   searchBtn.addEventListener("click", () => getWeatherData(getLocationInput()))
 }
 
 function getLocationInput() {
   const inputField = document.querySelector('#location-input');
-  const inputValue = inputField.value;
+  const locationName = inputField.value;
   clearInputField();
-  return inputValue;
+  return locationName;
 }
 
 function clearInputField() {
