@@ -1,20 +1,21 @@
 import addInputListener from "./input_controller";
+import createUserForm from "./user_form";
 
 export default function createPage() {
-  const searchLocationForm = createLocationFormEl();
-  const locationNameEl = createLocationHeaderEl();
-  const locationInfoEl = createLocationInfoEl();
-  const currentWeatherEl = createCurrentWeatherEl();
-  const forecastEl = createForecastEl();
+  const userForm = createUserForm();
+  const locationHeader = createLocationHeader();
+  const locationInfoDiv = createLocationInfoDiv();
+  const currentWeatherDiv = createCurrentWeatherDiv();
+  const forecastDiv = createForecastDiv();
 
   const mainDiv = document.createElement('div');
   mainDiv.className = 'main-div';
 
-  mainDiv.appendChild(searchLocationForm);
-  mainDiv.appendChild(locationNameEl);
-  mainDiv.appendChild(locationInfoEl);
-  mainDiv.appendChild(currentWeatherEl);
-  mainDiv.appendChild(forecastEl);
+  mainDiv.appendChild(userForm);
+  mainDiv.appendChild(locationHeader);
+  mainDiv.appendChild(locationInfoDiv);
+  mainDiv.appendChild(currentWeatherDiv);
+  mainDiv.appendChild(forecastDiv);
 
   const body = document.querySelector('body');
   body.appendChild(mainDiv);
@@ -22,46 +23,19 @@ export default function createPage() {
   addInputListener();
 }
 
-function createLocationFormEl() {
-  const visitorFormWrapper = document.createElement('div');
-  visitorFormWrapper.classList.add('visitor-form-wrapper');
 
-  const locationInputLabel = document.createElement('label');
-  locationInputLabel.className = 'location-input-label'
-  locationInputLabel.htmlFor = 'location-input';
-  locationInputLabel.innerText = 'Search location:';
 
-  const inputDiv = document.createElement('div'); 
-  inputDiv.className = "input-div"
 
-  const locationInput = document.createElement('input');
-  locationInput.id =  'location-input';
-  
-  const searchBtn = document.createElement('button');
-  searchBtn.className = 'search-btn';
-  searchBtn.innerText = 'Search';
-  
-  const errorField = document.createElement("p");
-  errorField.className = "error";
-  errorField.innerText = "Test error";
 
-  inputDiv.appendChild(locationInput);
-  inputDiv.appendChild(searchBtn);
-  
-  visitorFormWrapper.appendChild(locationInputLabel);
-  visitorFormWrapper.appendChild(inputDiv);
-  visitorFormWrapper.appendChild(errorField);
-  return visitorFormWrapper;
-}
 
-function createLocationHeaderEl() {
+function createLocationHeader() {
   let locationNameEl = document.createElement('h1');
   locationNameEl.className = 'location-h1';
   locationNameEl.innerText = 'Use the search bar to find location';
   return locationNameEl;
 }
 
-function createLocationInfoEl() { 
+function createLocationInfoDiv() { 
   const locationHeader = document.createElement('h3');
   const nameEl = document.createElement('p');
   const regionEl = document.createElement('p');
@@ -98,7 +72,7 @@ function createLocationInfoEl() {
   return locationInfoEl;
 }
 
-function createCurrentWeatherEl() {
+function createCurrentWeatherDiv() {
   const tempHeader = document.createElement('h3');
   const icon = new Image();
   const conditionEl = document.createElement('p');
@@ -144,7 +118,7 @@ function createCurrentWeatherEl() {
   return currentWeatherEl
 }
 
-function createForecastEl() {
+function createForecastDiv() {
   const forecastEl = document.createElement('div');
   const forecastHeader = document.createElement('h3');
   const forecastWrapper = document.createElement('div');
