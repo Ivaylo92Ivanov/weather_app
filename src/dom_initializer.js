@@ -1,17 +1,23 @@
 import addInputListener from "./input_controller";
 
 export default function createPage() {
-  const body = document.querySelector('body');
-
   const searchLocationForm = createLocationFormEl();
   const locationNameEl = createLocationHeaderEl();
   const locationInfoEl = createLocationInfoEl();
   const currentWeatherEl = createCurrentWeatherEl();
+  const forecastEl = createForecastEl();
 
-  body.appendChild(searchLocationForm);
-  body.appendChild(locationNameEl);
-  body.appendChild(locationInfoEl);
-  body.appendChild(currentWeatherEl);
+  const mainDiv = document.createElement('div');
+  mainDiv.className = 'main-div';
+
+  mainDiv.appendChild(searchLocationForm);
+  mainDiv.appendChild(locationNameEl);
+  mainDiv.appendChild(locationInfoEl);
+  mainDiv.appendChild(currentWeatherEl);
+  mainDiv.appendChild(forecastEl);
+
+  const body = document.querySelector('body');
+  body.appendChild(mainDiv);
 
   addInputListener();
 }
@@ -94,6 +100,7 @@ function createLocationInfoEl() {
 
 function createCurrentWeatherEl() {
   const tempHeader = document.createElement('h3');
+  const icon = new Image();
   const conditionEl = document.createElement('p');
   const tempEl = document.createElement('p');
   const feelsLikeEl = document.createElement('p');
@@ -103,6 +110,7 @@ function createCurrentWeatherEl() {
   const visibilityEl = document.createElement('p');
 
   tempHeader.className = 'temp-h3';
+  icon.className = 'current-icon';
   conditionEl.className = 'condition-el';
   tempEl.className = 'temp-el';
   feelsLikeEl.className = 'feels-like-el';
@@ -124,6 +132,7 @@ function createCurrentWeatherEl() {
   currentWeatherEl.className = 'current-weather-div';
 
   currentWeatherEl.appendChild(tempHeader);
+  currentWeatherEl.appendChild(icon);
   currentWeatherEl.appendChild(conditionEl);
   currentWeatherEl.appendChild(tempEl);
   currentWeatherEl.appendChild(feelsLikeEl);
@@ -131,11 +140,95 @@ function createCurrentWeatherEl() {
   currentWeatherEl.appendChild(windSpeedEl);
   currentWeatherEl.appendChild(windDirectionEl);
   currentWeatherEl.appendChild(visibilityEl);
-  
+
   return currentWeatherEl
 }
 
-// good for testing 
-// for (const [key, value] of Object.entries(locationData)) {
-//   console.log(`${key}: ${value}`);
-// }
+function createForecastEl() {
+  const forecastEl = document.createElement('div');
+  const forecastHeader = document.createElement('h3');
+  const forecastWrapper = document.createElement('div');
+
+  forecastEl.className = 'forecast-el';
+  forecastHeader.className = 'forecast-h3'
+  forecastWrapper.className = 'forecast-wrapper'
+
+  forecastHeader.textContent = "Forecast";
+  // forecast.forecastday.forEach(day => {
+  //   const dayEl = (createForecastDayEl(day))
+  //   forecastWrapper.appendChild(dayEl);
+  // });
+
+  forecastEl.appendChild(forecastHeader);
+  forecastEl.appendChild(forecastWrapper);
+
+  return forecastEl
+}
+
+
+function convertForecastToDomEls (day) {
+  const date = day.date;
+  const condition = day.day.condition.text;
+  const maxTempC = day.day.maxtemp_c;
+  const minTempC = day.day.mintemp_c;
+  const dailyChanceOfRain = day.day.daily_chance_of_rain;
+  const dailyChanceOfSnow = day.day.daily_chance_of_snow;
+  const sunrise = day.astro.sunrise;
+  const sunset = day.astro.sunset;
+
+  const maxTempF = day.day.maxtemp_f;
+  const minTempF = day.day.mintemp_f;
+
+  const dateEl = document.createElement('p');
+  const conditionEl = document.createElement('p');
+  const maxTempEl = document.createElement('p');
+  const minTempEl = document.createElement('p');
+  const dailyChanceOfRainEl = document.createElement('p');
+  const dailyChanceOfSnowEl = document.createElement('p');
+  const sunriseEl = document.createElement('p');
+  const sunsetEl = document.createElement('p');
+
+  const icon = new Image();
+  icon.src = day.day.condition.icon;
+  console.log(icon)
+
+  dateEl.innerText = date;
+  conditionEl.innerText = condition;
+  maxTempEl.innerText = 'Max temp: ' + maxTempC + '°C';
+  minTempEl.innerText = 'Min temp: ' + minTempC + '°C';
+  dailyChanceOfRainEl.innerText = 'Chance of rain: ' + dailyChanceOfRain + '%';
+  dailyChanceOfSnowEl.innerText = 'Chance of snow: ' + dailyChanceOfSnow + '%';
+  sunriseEl.innerText = 'Sunrise: ' + sunrise;
+  sunsetEl.innerText = 'Sunset: ' + sunset;
+
+  return {
+    icon,
+    dateEl,
+    conditionEl,
+    maxTempEl,
+    minTempEl,
+    dailyChanceOfRainEl,
+    dailyChanceOfSnowEl,
+    sunriseEl,
+    sunsetEl,
+  }
+}
+
+export function updateForecastEl(forecast) {
+  const forecastWrapper = document.querySelector('.forecast-wrapper');
+  forecastWrapper.innerHTML = "";
+  forecast.forecastday.forEach(day => {
+      const dayForecast = convertForecastToDomEls(day);
+      const dayEl = document.createElement('div');
+      dayEl.className = 'day-' + forecast.forecastday.indexOf(day);
+
+      for (const [key, domEl] of Object.entries(dayForecast)) {
+          dayEl.appendChild(domEl); 
+      }
+
+      forecastWrapper.appendChild(dayEl);
+    }
+  );
+}
+
+

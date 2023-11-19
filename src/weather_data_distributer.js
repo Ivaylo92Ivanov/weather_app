@@ -1,3 +1,5 @@
+import { updateForecastEl } from "./dom_initializer"
+
 export default function distributeData(weatherData) {
   const locationData = weatherData.location;
   const currentWeatherData = weatherData.current;
@@ -20,9 +22,9 @@ function updateLocationInfo (locationData) {
   const nameEl = document.querySelector('.name-el');
   const regionEl = document.querySelector('.region-el');
   const countryEl = document.querySelector('.country-el');
-  const dateEl = document.querySelector('.timezone-el');
-  const timeEl = document.querySelector('.date-el'); 
-  const timeZoneEl = document.querySelector('.time-el');
+  const dateEl = document.querySelector('.date-el');
+  const timeEl = document.querySelector('.time-el'); 
+  const timeZoneEl = document.querySelector('.timezone-el');
 
   locationHeaderEl.innerText = name;
   nameEl.innerText = 'City: ' + name;
@@ -33,10 +35,10 @@ function updateLocationInfo (locationData) {
   timeEl.innerText = 'Time: ' + time;
 } 
 
+// think about mph and fahrenheit
 function updateCurrentWeather(currentWeather) {
-
+  const iconUrl = currentWeather.condition.icon;
   const condition = currentWeather.condition.text;
-  const iconUrl = currentWeather.condition.icon; // not used right now
   const tempC = currentWeather.temp_c;
   const feelsTempC = currentWeather.feelslike_c;
   const humidity = currentWeather.humidity;
@@ -49,6 +51,7 @@ function updateCurrentWeather(currentWeather) {
   const windMPH = currentWeather.wind_mph;
   const visibilityMPH = currentWeather.vis_miles;
 
+  const icon = document.querySelector('.current-icon');
   const conditionEl = document.querySelector('.condition-el');
   const tempEl = document.querySelector('.temp-el');
   const feelsLikeEl = document.querySelector('.feels-like-el');
@@ -57,25 +60,17 @@ function updateCurrentWeather(currentWeather) {
   const windDirectionEl = document.querySelector('.wind-dir-el');
   const visibilityEl = document.querySelector('.visibility-el');
 
+  icon.src = iconUrl;
   conditionEl.innerText = condition;
-  tempEl.innerText = 'Temperature: ' + tempC + 'C';
-  feelsLikeEl.innerText = 'Feels like: ' + feelsTempC + 'C';
+  tempEl.innerText = 'Temperature: ' + tempC + '°C';
+  feelsLikeEl.innerText = 'Feels like: ' + feelsTempC + '°C';
   humidityEl.innerText = 'Humidity: '+ humidity +'%';
   windSpeedEl.innerText = 'Wind speed: ' + windKPH + 'km/h';
   windDirectionEl.innerText = 'Wind direction: ' + windDirection;
   visibilityEl.innerText = 'Visibility: ' + visibilityKPH + 'km';
-
-
-  // testing below
-  console.log(`From function ${iconUrl}`)
-  console.log(currentWeather)
-
-
-  for (const [key, value] of Object.entries(currentWeather)) {
-    console.log(`${key}: ${value}`);
-  }
 }
 
-function updateForecast(data) {
-  console.log(data);
+function updateForecast(forecast) {
+  updateForecastEl(forecast);
+
 }
