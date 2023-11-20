@@ -10,6 +10,5 @@ export default function populateData(weatherData) {
   updateLocationInfo(locationData);
   updateCurrentWeather(currentWeatherData);
   updateForecast(forecastData);
-  
 }
 

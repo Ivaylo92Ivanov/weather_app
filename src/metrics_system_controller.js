@@ -12,6 +12,7 @@ export function switchMetricsSystem() {
     windSpeedMilEl
   ]
 
+  //if el invisible, make visible and vice versa
   listOfDomEl.forEach((el) => {
     el.style.display == 'none' ? el.style.display = 'block' : el.style.display = 'none';
   })

@@ -8,18 +8,14 @@ export default function createForecastDiv() {
   forecastWrapper.className = 'forecast-wrapper'
 
   forecastHeader.textContent = "Forecast";
-  // forecast.forecastday.forEach(day => {
-  //   const dayEl = (createForecastDayEl(day))
-  //   forecastWrapper.appendChild(dayEl);
-  // });
-
+  
   forecastEl.appendChild(forecastHeader);
   forecastEl.appendChild(forecastWrapper);
 
   return forecastEl
 }
 
-function convertForecastToDomEls (day) {
+function convertForecastToDomEls(day) {
   const date = day.date;
   const condition = day.day.condition.text;
   const maxTempC = day.day.maxtemp_c;
@@ -53,8 +49,7 @@ function convertForecastToDomEls (day) {
 
   const icon = new Image();
   icon.src = day.day.condition.icon;
-  console.log(icon)
-
+  
   dateEl.innerText = date;
   conditionEl.innerText = condition;
   maxTempCelEl.innerText = 'Max temp: ' + maxTempC + '°C';
