@@ -1,3 +1,6 @@
+import {switchTempSystem} from './temp_system_controller';
+import { switchMetricsSystem } from './metrics_system_controller';
+
 export default function createUserForm() {
   const locationFormWrapper = document.createElement('div');
   locationFormWrapper.classList.add('user-form-wrapper');
@@ -56,10 +59,10 @@ function createMetricSystemForm() {
   kmLabel.htmlFor = 'km-btn';
   milLabel.htmlFor = 'mil-btn';
 
-  kmButton.checked = 'true';
-
   kmButton.id = 'km-btn';
   milButton.id = 'mil-btn';
+
+  kmButton.checked = 'true';
 
   kmButton.name = 'metric-question';
   milButton.name = 'metric-question';
@@ -71,6 +74,9 @@ function createMetricSystemForm() {
   kmLabel.innerText = 'km/h';
   milLabel.innerText = 'm/h'; 
   
+  kmButton.addEventListener('click', () => switchMetricsSystem());
+  milButton.addEventListener('click', () => switchMetricsSystem());
+
   metricsForm.className = 'radio-question';
 
   metricsForm.appendChild(questionP);
@@ -80,7 +86,6 @@ function createMetricSystemForm() {
   metricsForm.appendChild(milLabel);
 
   return metricsForm
-
 }
 
 function createTempSystemForm() {
@@ -110,6 +115,9 @@ function createTempSystemForm() {
   fahLabel.innerText = '°F'; 
   
   tempForm.className = 'radio-question';
+
+  celButton.addEventListener('click', () => switchTempSystem());
+  fahButton.addEventListener('click', () => switchTempSystem());
 
   tempForm.appendChild(questionP);
   tempForm.appendChild(celButton);
